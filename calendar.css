@@ -1,1 +1,12 @@
+body{
+    border: 1em solid;
+    margin:1em;
+}
 
+.taskbox{
+
+}
+
+.calendarbox{
+    float: right;
+}
