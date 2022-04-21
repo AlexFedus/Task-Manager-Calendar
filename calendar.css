@@ -12,4 +12,21 @@ body{
 .calendarbox{
     float: right;
     border: 1px solid;
+    margin: 1em;
+    width: auto;
+    
+}
+
+.weekdays{
+
+}
+
+#monthyear{
+    text-align: center;
+    font-size: 35px;
+}
+
+th{
+    padding-right: 40px;
+    padding-left: 40px;
 }
