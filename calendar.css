@@ -6,7 +6,7 @@ body{
 .taskbox{
     border: 1px solid;
     margin: 1em;
-    float: left;
+    
 }
 
 .calendarbox{
@@ -17,8 +17,18 @@ body{
     
 }
 
-.weekdays{
+.tasks{
+    float: left;
+}
 
+.tasklist{
+    border: 1px solid;
+    margin: 1em;
+    min-height: 300px;
+}
+
+.weekdays{
+  
 }
 
 #monthyear{
@@ -29,4 +39,11 @@ body{
 th{
     padding-right: 40px;
     padding-left: 40px;
+
+}
+
+td {
+    padding-bottom: 4em;
+    border: 1px solid;
+    text-align: left;
 }

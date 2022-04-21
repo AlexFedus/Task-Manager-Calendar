@@ -1,54 +1,71 @@
 <html>
-    <head>
-        <script src="calendar.js" type="text/javascript"></script>
-        <link rel="stylesheet" href="calendar.css">
 
-    </head>
-    <body>
+<head>
+    <script src="calendar.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="calendar.css">
+
+</head>
+
+<body>
+    <div class="tasks">
         <div class="taskbox">
-            <h1>Tasks</h1>
+            
             <p>Add New Tasks</p>
             <label>
                 Task Name:
-                <input type ="text" id="taskname" name="taskname">
+                <input type="text" id="taskname" name="taskname">
             </label>
 
             <br>
             <br>
 
-            <input type = "date"/>
+            <input type="date" id = "date"/>
 
             <br>
             <br>
 
-            <input type = "time"/>
+            <input type="time" id="time"/>
 
             <br>
             <br>
 
-            <button type ="button">Add Task</button>
-            
+            <button type="button" id = "button">Add Task</button>
+
         </div>
 
-        <div class="calendarbox">
 
-            <div id="monthyear"></div>
-
-            <br>
-            
-            <table class="weekdays">
-                <tr>
-                  <th>Sunday</th>
-                  <th>Monday</th>
-                  <th>Tuesday</th>
-                  <th>Wednesday</th>
-                  <th>Thursday</th>
-                  <th>Friday</th>
-                  <th>Saturday</th>
-                </tr>
-            </table>
-
-
+        <div class="tasklist">
+            <h2>Tasks:</h2>
         </div>
-    </body>
+    </div>
+
+    <div class="calendarbox">
+
+        <div id="monthyear"></div>
+
+        <br>
+
+        <table class="weekdays">
+            <tr>
+                <th>Sunday</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+            </tr>
+
+
+            <tbody id="calbody">
+
+            </tbody>
+        </table>
+
+
+    </div>
+
+
+</body>
+
 </html>
