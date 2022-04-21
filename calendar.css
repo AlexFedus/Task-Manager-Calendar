@@ -4,9 +4,12 @@ body{
 }
 
 .taskbox{
-
+    border: 1px solid;
+    margin: 1em;
+    float: left;
 }
 
 .calendarbox{
     float: right;
+    border: 1px solid;
 }
