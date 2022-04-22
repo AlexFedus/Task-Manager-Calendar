@@ -55,7 +55,7 @@ function loadCells(currmonth, curYear) {
             }
 
             else {
-                idname = currmonth + "-" + date + "-" + curYear;
+                idname = curYear + "-" + currmonth+ "-" + date ;
                 cell = document.createElement("td");
                 cell.setAttribute("id", idname);
                 cellText = document.createTextNode(date);
@@ -77,10 +77,19 @@ function addtasks() {
         var name = document.getElementById("taskname").value;
         console.log(name);
 
+        date = document.getElementById("date").value;
+        console.log(date);
+
+        time = document.getElementById("time").value;
+        console.log(time);
+
         task = document.createElement("li");
-        taskinfo = document.createTextNode(name);
+        taskinfo = document.createTextNode(name +" "+ date + " " + time);
         task.appendChild(taskinfo);
         document.getElementById("list").appendChild(task);
+
+        
+       
         
     }
 }
