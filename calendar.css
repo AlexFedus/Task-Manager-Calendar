@@ -6,11 +6,12 @@ body{
 .taskbox{
     border: 1px solid;
     margin: 1em;
+    padding: 3px;
     
 }
 
 .calendarbox{
-    float: right;
+   float: right;
     border: 1px solid;
     margin: 1em;
     width: auto;
@@ -25,6 +26,7 @@ body{
     border: 1px solid;
     margin: 1em;
     min-height: 300px;
+    padding: 3px;
 }
 
 .weekdays{

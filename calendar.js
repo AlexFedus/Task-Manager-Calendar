@@ -29,13 +29,12 @@ function loadCells(currmonth, curYear) {
     today = new Date();
     daysinmonth = new Date(curYear, currmonth + 1, 0).getDate();
     console.log(daysinmonth);
-    //firstDay = new Date(curYear, currmonth, 1);
     firstDay = (new Date(curYear, currmonth)).getDay();
     console.log(firstDay);
 
 
-    tbl = document.getElementById("calbody");
-    tbl.innerHTML = "";
+    caltable = document.getElementById("calbody");
+    caltable.innerHTML = "";
 
 
     date = 1;
@@ -68,7 +67,7 @@ function loadCells(currmonth, curYear) {
 
         }
 
-        tbl.appendChild(row); // appending each row into calendar body.
+        caltable.appendChild(row); 
     }
 
 }
@@ -78,6 +77,10 @@ function addtasks() {
         var name = document.getElementById("taskname").value;
         console.log(name);
 
+        task = document.createElement("li");
+        taskinfo = document.createTextNode(name);
+        task.appendChild(taskinfo);
+        document.getElementById("list").appendChild(task);
         
     }
 }
