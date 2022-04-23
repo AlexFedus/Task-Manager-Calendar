@@ -3,6 +3,11 @@ body{
     margin:1em;
 }
 
+
+.box{
+    display: flex;
+}
+
 .taskbox{
     border: 1px solid;
     margin: 1em;
@@ -10,16 +15,28 @@ body{
     
 }
 
+#tasktitle{
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 .calendarbox{
-   float: right;
+    
     border: 1px solid;
     margin: 1em;
     width: auto;
+    margin: 1em auto;
+    resize: auto;
+    
     
 }
 
 .tasks{
-    float: left;
+    margin-top: 5px;
+    margin-left: 5px;
+    
+  
 }
 
 .tasklist{
@@ -45,7 +62,7 @@ th{
 }
 
 td {
-    padding-bottom: 4em;
+    padding-bottom: 5em;
     border: 1px solid;
     text-align: left;
 }

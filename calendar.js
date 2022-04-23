@@ -55,7 +55,15 @@ function loadCells(currmonth, curYear) {
             }
 
             else {
-                idname = curYear + "-" + currmonth+ "-" + date ;
+
+                if (currmonth < 10){
+                    var updatemonth = "0" + (currmonth + 1);
+                }
+                else{
+                    var updatemonth = (currmonth + 1);
+                }
+
+                idname = curYear + "-" + updatemonth+ "-" + date ;
                 cell = document.createElement("td");
                 cell.setAttribute("id", idname);
                 cellText = document.createTextNode(date);
@@ -88,6 +96,8 @@ function addtasks() {
         task.appendChild(taskinfo);
         document.getElementById("list").appendChild(task);
 
+
+        document.getElementById(date).innerHTML += "<br>" + name;
         
        
         
