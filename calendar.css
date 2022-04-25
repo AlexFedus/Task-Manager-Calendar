@@ -46,8 +46,8 @@ body{
     padding: 3px;
 }
 
-.weekdays{
-  
+.monthbuttons {
+    margin-left: 40%;
 }
 
 #monthyear{

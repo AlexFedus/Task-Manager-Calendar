@@ -15,7 +15,7 @@
                 <p id="tasktitle">Add New Tasks</p>
                 <label>
                     Task Name:
-                    <input type="text" id="taskname" name="taskname">
+                    <input type="text" id="taskname" name="taskname" maxlength="20">
                 </label>
 
                 <br>
@@ -36,7 +36,7 @@
                 <br>
                 <br>
 
-                <button type="button" id="button">Add Task</button>
+                <button type="button" id="taskbutton">Add Task</button>
 
             </div>
 
@@ -71,7 +71,10 @@
 
                 </tbody>
             </table>
-
+            <table class="monthbuttons">
+                <th><button type="button" class="monthbutton" id="previous"> &laquo;</button></th>
+                <th><button type="button" class="monthbutton" id="next"> &raquo;</button></th>
+            </table>
 
         </div>
     </div>

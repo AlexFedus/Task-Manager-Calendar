@@ -6,9 +6,13 @@ window.onload = pageLoad;
 
 function pageLoad() {
     loadDate();
-    var taskbutton = document.getElementById("button");
-    taskbutton.onclick = addtasks;
+    var taskbutton = document.getElementById("taskbutton");
+    var nextbutton = document.getElementById("next");
+    var prevbutton = document.getElementById("previous");
 
+    taskbutton.onclick = addtasks;
+    nextbutton.onclick = nextMonth;
+    prevbutton.onclick = prevMonth;
 }
 
 function loadDate() {
@@ -92,21 +96,62 @@ function addtasks() {
         console.log(time);
 
         task = document.createElement("li");
-        taskinfo = document.createTextNode(name +" "+ date + " " + time);
+        taskinfo = document.createTextNode(name + " - "+ date + " - " + time);
+        
         task.appendChild(taskinfo);
         document.getElementById("list").appendChild(task);
 
 
         document.getElementById(date).innerHTML += "<br>" + name;
-        
-       
-        
     }
 }
 
 
+function nextMonth() {
+    current = new Date();
+    curmonth = current.getMonth() + 1;
+    curYear = current.getFullYear();
 
+    var months = ["Janauary", "February", "March", "April", "May", "June", "July", "August", "Septemeber", "Ocotober", "November", "December"]
+    if(curmonth < 11) {
+        monthandyear = months[curmonth] + ", " + curYear;
 
+        document.getElementById("monthyear").innerHTML = monthandyear;
+        loadCells(curmonth, curYear);
+    }
+    else{
+        curmonth -= 11;
+        curYear += 1;
 
+        monthandyear = months[curmonth] + ", " + curYear;
+
+        document.getElementById("monthyear").innerHTML = monthandyear;
+        loadCells(curmonth, curYear);
+    }
+}
+
+function prevMonth() {
+    current = new Date();
+    curmonth = current.getMonth();
+    curYear = current.getFullYear();
+
+    var months = ["Janauary", "February", "March", "April", "May", "June", "July", "August", "Septemeber", "Ocotober", "November", "December"]
+
+    if(curmonth > 1) {
+        monthandyear = months[curmonth - 1] + ", " + curYear;
+
+        document.getElementById("monthyear").innerHTML = monthandyear;
+        loadCells(curmonth, curYear);
+    }
+    else{
+        curYear -= 1;
+        curmonth = 11;
+
+        monthandyear = months[curmonth] + ", " + curYear;
+
+        document.getElementById("monthyear").innerHTML = monthandyear;
+        loadCells(curmonth, curYear);
+    }
+}
 
 
