@@ -101,8 +101,18 @@ function addtasks() {
         document.getElementById("list").appendChild(task);
 
 
-        document.getElementById(date).innerHTML += "<br>" + name;
+       
+
+        if(document.getElementById(date)){
+            document.getElementById(date).innerHTML += "<br>" + name;
+        }
+
+        var taskinfo = name + "-" + date;
+        task.setAttribute("id", taskinfo);
+
+        
     }
+    
 }
 
 
