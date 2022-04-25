@@ -46,9 +46,9 @@ body{
 .tasklist{
     border: 1px solid;
     margin: 1em;
-    min-height: 300px;
     padding: 3px;
     background-color: white;
+    
 }
 
 .monthbuttons {
@@ -71,3 +71,10 @@ td {
     border: 1px solid;
     text-align: left;
 }
+
+#list {
+    font-size: 19px;
+    text-align: center;
+    
+}
+

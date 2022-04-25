@@ -94,11 +94,24 @@ function addtasks() {
         time = document.getElementById("time").value;
         console.log(time);
 
-        task = document.createElement("li");
-        taskinfo = document.createTextNode(name + " - "+ date + " - " + time);
+        //taskinfo = document.createTextNode(name + " - "+ date + " - " + time);
+        var taskinfo = name + "-" + date;
         
-        task.appendChild(taskinfo);
-        document.getElementById("list").appendChild(task);
+
+        task = document.createElement("input");
+        task.type = "checkbox";
+        var label = document.createElement("label");
+        label.htmlFor = taskinfo;
+        label.appendChild(document.createTextNode(taskinfo));
+
+        var br = document.createElement("br");
+
+        
+        //task.appendChild(taskinfo);
+        list.appendChild(label);
+        list.appendChild(task);
+        //document.getElementById("list").appendChild(task);
+        list.appendChild(br);
 
 
        
@@ -107,7 +120,6 @@ function addtasks() {
             document.getElementById(date).innerHTML += "<br>" + name;
         }
 
-        var taskinfo = name + "-" + date;
         task.setAttribute("id", taskinfo);
 
        
