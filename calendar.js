@@ -1,3 +1,8 @@
+current = new Date();
+var curmonth = current.getMonth();
+var curYear = current.getFullYear();
+const months = ["Janauary", "February", "March", "April", "May", "June", "July", "August", "Septemeber", "Ocotober", "November", "December"];
+
 window.onload = pageLoad;
 
 
@@ -16,12 +21,6 @@ function pageLoad() {
 }
 
 function loadDate() {
-    current = new Date();
-    curmonth = current.getMonth();
-    curYear = current.getFullYear();
-
-    var months = ["Janauary", "February", "March", "April", "May", "June", "July", "August", "Septemeber", "Ocotober", "November", "December"]
-
     monthandyear = months[curmonth] + ", " + curYear;
 
     document.getElementById("monthyear").innerHTML = monthandyear;
@@ -108,12 +107,9 @@ function addtasks() {
 
 
 function nextMonth() {
-    current = new Date();
-    curmonth = current.getMonth() + 1;
-    curYear = current.getFullYear();
 
-    var months = ["Janauary", "February", "March", "April", "May", "June", "July", "August", "Septemeber", "Ocotober", "November", "December"]
     if(curmonth < 11) {
+        curmonth += 1;
         monthandyear = months[curmonth] + ", " + curYear;
 
         document.getElementById("monthyear").innerHTML = monthandyear;
@@ -131,14 +127,9 @@ function nextMonth() {
 }
 
 function prevMonth() {
-    current = new Date();
-    curmonth = current.getMonth();
-    curYear = current.getFullYear();
-
-    var months = ["Janauary", "February", "March", "April", "May", "June", "July", "August", "Septemeber", "Ocotober", "November", "December"]
-
-    if(curmonth > 1) {
-        monthandyear = months[curmonth - 1] + ", " + curYear;
+    if(curmonth > 0) {
+        curmonth -= 1;
+        monthandyear = months[curmonth] + ", " + curYear;
 
         document.getElementById("monthyear").innerHTML = monthandyear;
         loadCells(curmonth, curYear);
