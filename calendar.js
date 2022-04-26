@@ -1,7 +1,7 @@
 current = new Date();
 var curmonth = current.getMonth();
 var curYear = current.getFullYear();
-const months = ["Janauary", "February", "March", "April", "May", "June", "July", "August", "September", "Ocotober", "November", "December"];
+const months = ["Janauary", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 window.onload = pageLoad;
 
