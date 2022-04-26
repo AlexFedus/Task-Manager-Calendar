@@ -69,6 +69,8 @@ function loadCells(currmonth, curYear) {
                 idname = curYear + "-" + updatemonth + "-" + date;
                 cell = document.createElement("td");
                 cell.setAttribute("id", idname);
+
+                
                 cellText = document.createTextNode(date);
                 cell.appendChild(cellText);
                 row.appendChild(cell);
@@ -121,7 +123,15 @@ function addtasks() {
 
 
         if (document.getElementById(date)) {
-            document.getElementById(date).innerHTML += "<br>" + name;
+            var taskspantag = document.createElement("span");
+            taskspantagname = "span-"+ name + "-" + date;
+            taskspantag.id = taskspantagname;
+
+            
+            taskspantag.innerHTML += "<br>" + name;
+
+            console.log(taskspantag);
+            document.getElementById(date).appendChild(taskspantag);
         }
 
         task.setAttribute("id", taskinfo);
@@ -142,6 +152,10 @@ function deleteTasks() {
             var test = "label-"+checkbox.id;
             console.log(test);
             document.getElementById(test).remove();
+            checkboxtospan = checkbox.id.replace("label", "");
+            checkboxtospan = "span-"+ checkboxtospan;
+            console.log(checkboxtospan);
+            document.getElementById(checkboxtospan).remove();
             checkbox.remove();  
 
         
