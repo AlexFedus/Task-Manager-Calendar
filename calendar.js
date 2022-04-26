@@ -59,14 +59,14 @@ function loadCells(currmonth, curYear) {
 
             else {
 
-                if (currmonth < 10){
+                if (currmonth < 10) {
                     var updatemonth = "0" + (currmonth + 1);
                 }
-                else{
+                else {
                     var updatemonth = (currmonth + 1);
                 }
 
-                idname = curYear + "-" + updatemonth+ "-" + date ;
+                idname = curYear + "-" + updatemonth + "-" + date;
                 cell = document.createElement("td");
                 cell.setAttribute("id", idname);
                 cellText = document.createTextNode(date);
@@ -78,7 +78,7 @@ function loadCells(currmonth, curYear) {
 
         }
 
-        caltable.appendChild(row); 
+        caltable.appendChild(row);
     }
 
 }
@@ -96,49 +96,74 @@ function addtasks() {
 
         //taskinfo = document.createTextNode(name + " - "+ date + " - " + time);
         var taskinfo = name + "-" + date;
-        
+        var labelinfo = "label" + "-" + name + "-" + date;
 
         task = document.createElement("input");
         task.type = "checkbox";
+        task.name = "task"
         var label = document.createElement("label");
+        label.setAttribute("id", labelinfo);
         label.htmlFor = taskinfo;
         label.appendChild(document.createTextNode(taskinfo));
 
         var br = document.createElement("br");
 
-        
+
+
         //task.appendChild(taskinfo);
+
         list.appendChild(label);
         list.appendChild(task);
         //document.getElementById("list").appendChild(task);
         list.appendChild(br);
 
 
-       
 
-        if(document.getElementById(date)){
+
+        if (document.getElementById(date)) {
             document.getElementById(date).innerHTML += "<br>" + name;
         }
 
         task.setAttribute("id", taskinfo);
 
-       
-        
+        var deleteButton = document.getElementById("deleteButton");
+        deleteButton.onclick = deleteTasks;
+
+
+
     }
-    
+
 }
+
+function deleteTasks() {
+    var checkboxes = document.getElementsByName("task");
+    for (var checkbox of checkboxes) {
+        if (checkbox.checked) {
+            var test = "label-"+checkbox.id;
+            console.log(test);
+            document.getElementById(test).remove();
+            checkbox.remove();  
+
+        
+        }
+    }
+
+
+   
+}
+
 
 
 function nextMonth() {
 
-    if(curmonth < 11) {
+    if (curmonth < 11) {
         curmonth += 1;
         monthandyear = months[curmonth] + ", " + curYear;
 
         document.getElementById("monthyear").innerHTML = monthandyear;
         loadCells(curmonth, curYear);
     }
-    else{
+    else {
         curmonth -= 11;
         curYear += 1;
 
@@ -150,14 +175,14 @@ function nextMonth() {
 }
 
 function prevMonth() {
-    if(curmonth > 0) {
+    if (curmonth > 0) {
         curmonth -= 1;
         monthandyear = months[curmonth] + ", " + curYear;
 
         document.getElementById("monthyear").innerHTML = monthandyear;
         loadCells(curmonth, curYear);
     }
-    else{
+    else {
         curYear -= 1;
         curmonth = 11;
 
