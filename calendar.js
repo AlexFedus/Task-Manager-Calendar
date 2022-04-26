@@ -1,6 +1,7 @@
 current = new Date();
 var curmonth = current.getMonth();
 var curYear = current.getFullYear();
+var curday = current.getDay();
 const months = ["Janauary", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 window.onload = pageLoad;
@@ -91,6 +92,17 @@ function addtasks() {
         console.log(name);
 
         date = document.getElementById("date").value;
+        var newdate = date.split("-");
+        var newdateday = newdate[2];
+
+        if(newdateday < 10){
+            newdateday = newdateday.replace("0", "");
+            console.log(newdateday);
+            date = newdate[0] + "-" + newdate[1] + "-" + newdateday;
+            console.log(date);
+        }
+
+
         console.log(date);
 
         time = document.getElementById("time").value;
@@ -153,6 +165,8 @@ function deleteTasks() {
             console.log(test);
             document.getElementById(test).remove();
             checkboxtospan = checkbox.id.replace("label", "");
+
+       
             checkboxtospan = "span-"+ checkboxtospan;
             console.log(checkboxtospan);
             document.getElementById(checkboxtospan).remove();
@@ -186,6 +200,53 @@ function nextMonth() {
         document.getElementById("monthyear").innerHTML = monthandyear;
         loadCells(curmonth, curYear);
     }
+
+    
+    var labelinformation = document.getElementById("list").getElementsByTagName("label");
+    
+    console.log(labelinformation);
+
+    for (var i = 0; i < labelinformation.length; i++){
+        var tasklabel = labelinformation[i].attributes[0].nodeValue;
+
+        taskname = (tasklabel.split("-")[1]);
+        taskyear= (tasklabel.split("-")[2])
+        taskmonth = (tasklabel.split("-")[3])
+        taskday = (tasklabel.split("-")[4])
+        console.log(taskyear);
+        console.log(taskmonth);
+
+        if(taskday < 10){
+            console.log(taskday);
+            taskday = taskday.replace("0", "");
+        }
+        
+
+        
+       
+
+        if (curmonth < 10) {
+            var newmonth = "0" + (curmonth + 1);
+        }
+
+        console.log(newmonth);
+
+        if(curYear == taskyear & newmonth == taskmonth){
+            console.log(taskname);
+            var taskdate = taskyear + "-" + taskmonth + "-" + taskday;
+            console.log(taskdate);
+            var taskspantag = document.createElement("span");
+            taskspantagname = "span-"+ taskname + "-" + taskdate;
+            taskspantag.id = taskspantagname;
+
+            
+            taskspantag.innerHTML += "<br>" + taskname;
+
+            console.log(taskspantag);
+            document.getElementById(taskdate).appendChild(taskspantag);
+        }
+    }
+    
 }
 
 function prevMonth() {
@@ -204,6 +265,46 @@ function prevMonth() {
 
         document.getElementById("monthyear").innerHTML = monthandyear;
         loadCells(curmonth, curYear);
+    }
+
+    var labelinformation = document.getElementById("list").getElementsByTagName("label");
+    for (var i = 0; i < labelinformation.length; i++){
+        var tasklabel = labelinformation[i].attributes[0].nodeValue;
+
+        taskname = (tasklabel.split("-")[1]);
+        taskyear= (tasklabel.split("-")[2])
+        taskmonth = (tasklabel.split("-")[3])
+        taskday = (tasklabel.split("-")[4])
+        console.log(taskyear);
+        console.log(taskmonth);
+        
+        if(taskday < 10){
+            console.log(taskday);
+            taskday = taskday.replace("0", "");
+        }
+        
+       
+
+        if (curmonth < 10) {
+            var newmonth = "0" + (curmonth + 1);
+        }
+
+        console.log(newmonth);
+
+        if(curYear == taskyear & newmonth == taskmonth){
+            console.log(taskname);
+            var taskdate = taskyear + "-" + taskmonth + "-" + taskday;
+            console.log(taskdate);
+            var taskspantag = document.createElement("span");
+            taskspantagname = "span-"+ taskname + "-" + taskdate;
+            taskspantag.id = taskspantagname;
+
+            
+            taskspantag.innerHTML += "<br>" + taskname;
+
+            console.log(taskspantag);
+            document.getElementById(taskdate).appendChild(taskspantag);
+        }
     }
 }
 
