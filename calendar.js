@@ -169,12 +169,22 @@ function deleteTasks() {
             console.log(test);
             document.getElementById(test).remove();
             checkboxtospan = checkbox.id.replace("label", "");
-
+            checkbox.remove();
        
             checkboxtospan = "span-"+ checkboxtospan;
             console.log(checkboxtospan);
-            document.getElementById(checkboxtospan).remove();
-            checkbox.remove();  
+
+            checkmonthspan = checkboxtospan.split("-")[3];
+            console.log(checkmonthspan);
+            checkmonth= curmonth + 1;
+
+            if(checkmonth < 10){
+                checkmonth = "0" + checkmonth;
+            }
+
+            if(checkmonth == checkboxtospan){
+                document.getElementById(checkboxtospan).remove();
+            }
 
         
         }
