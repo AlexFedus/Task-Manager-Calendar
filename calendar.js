@@ -78,6 +78,7 @@ function loadCells(currmonth, curYear) {
                 date++;
             }
 
+            
 
         }
 
