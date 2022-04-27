@@ -1,1 +1,47 @@
+{
+    "holidays": [
 
+        {"name": "New Years", "date": "2022-01-1" },
+        {"name": "MLK Day", "date": "2022-01-17" },
+        {"name": "Groundhog Day", "date": "2022-02-2" },
+        {"name": "Valentine's Day", "date": "2022-02-14" },
+        {"name": "Daylight Saving (start)", "date": "2022-03-13" },
+        {"name": "St. Patrick's Day", "date": "2022-03-17" },
+        {"name": "April Fool's Day", "date": "2022-04-1" },
+        {"name": "Good Friday", "date": "2022-04-15" },
+        {"name": "Easter", "date": "2022-04-17" },
+        {"name": "Cinco de Mayo", "date": "2022-05-5" },
+        {"name": "Mother's Day", "date": "2022-05-8" },
+        {"name": "Memorial Day", "date": "2022-05-30" },
+        {"name": "Father's Day", "date": "2022-06-19" },
+        {"name": "Independence Day", "date": "2022-07-4" },
+        {"name": "Labor Day", "date": "2022-09-5" },
+        {"name": "Halloween", "date": "2022-10-31" },
+        {"name": "Daylight's Saving (end)", "date": "2022-11-6" },
+        {"name": "Thanksgiving", "date": "2022-11-24" },
+        {"name": "Christmas Day", "date": "2022-12-25" },
+        {"name": "New Year's Eve", "date": "2022-12-31" },
+
+        {"name": "New Years", "date": "2023-01-1" },
+        {"name": "MLK Day", "date": "2023-01-16" },
+        {"name": "Groundhog Day", "date": "2023-02-2" },
+        {"name": "Valentine's Day", "date": "2023-02-14" },
+        {"name": "Daylight Saving (start)", "date": "2023-03-12" },
+        {"name": "St. Patrick's Day", "date": "2023-03-17" },
+        {"name": "April Fool's Day", "date": "2023-04-1" },
+        {"name": "Good Friday", "date": "2023-04-7" },
+        {"name": "Easter", "date": "2023-04-9" },
+        {"name": "Cinco de Mayo", "date": "2023-05-5" },
+        {"name": "Mother's Day", "date": "2023-05-14" },
+        {"name": "Memorial Day", "date": "2023-05-29" },
+        {"name": "Father's Day", "date": "2023-06-18" },
+        {"name": "Independence Day", "date": "2023-07-4" },
+        {"name": "Labor Day", "date": "2023-09-4" },
+        {"name": "Halloween", "date": "2023-10-31" },
+        {"name": "Daylight's Saving (end)", "date": "2023-11-5" },
+        {"name": "Thanksgiving", "date": "2023-11-23" },
+        {"name": "Christmas Day", "date": "2023-12-25" },
+        {"name": "New Year's Eve", "date": "2023-12-31" }
+        
+    ]
+}

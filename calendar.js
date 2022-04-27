@@ -85,6 +85,9 @@ function loadCells(currmonth, curYear) {
         caltable.appendChild(row);
     }
 
+    
+
+
 }
 
 function addtasks() {
