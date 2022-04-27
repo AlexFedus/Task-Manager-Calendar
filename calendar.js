@@ -71,24 +71,26 @@ function loadCells(currmonth, curYear) {
                 cell = document.createElement("td");
                 cell.setAttribute("id", idname);
 
-                
+
                 cellText = document.createTextNode(date);
                 cell.appendChild(cellText);
                 row.appendChild(cell);
                 date++;
             }
 
-            
+
 
         }
 
         caltable.appendChild(row);
+        //holidays();
     }
 
-    
-
-
 }
+
+
+
+  
 
 function addtasks() {
     if (document.getElementById("taskname").value != "") {
@@ -99,7 +101,7 @@ function addtasks() {
         var newdate = date.split("-");
         var newdateday = newdate[2];
 
-        if(newdateday < 10){
+        if (newdateday < 10) {
             newdateday = newdateday.replace("0", "");
             console.log(newdateday);
             date = newdate[0] + "-" + newdate[1] + "-" + newdateday;
@@ -116,34 +118,43 @@ function addtasks() {
         var taskinfo = name + "-" + date;
         var labelinfo = "label" + "-" + name + "-" + date;
 
+        taskdiv = document.createElement("div");
+        taskdiv.setAttribute("id", labelinfo);
+
         task = document.createElement("input");
         task.type = "checkbox";
         task.name = "task"
         var label = document.createElement("label");
-        label.setAttribute("id", labelinfo);
+        //label.setAttribute("id", labelinfo);
         label.htmlFor = taskinfo;
         label.appendChild(document.createTextNode(taskinfo));
 
-        var br = document.createElement("br");
-
+        //var br = document.createElement("br");
 
 
         //task.appendChild(taskinfo);
 
-        list.appendChild(label);
-        list.appendChild(task);
+
+        //list.appendChild(br);
+
+        taskdiv.appendChild(label);
+        taskdiv.appendChild(task);
+        list.appendChild(taskdiv);
+
+        //list.appendChild(label);
+        //list.appendChild(task);
         //document.getElementById("list").appendChild(task);
-        list.appendChild(br);
+
 
 
 
 
         if (document.getElementById(date)) {
             var taskspantag = document.createElement("span");
-            taskspantagname = "span-"+ name + "-" + date;
+            taskspantagname = "span-" + name + "-" + date;
             taskspantag.id = taskspantagname;
 
-            
+
             taskspantag.innerHTML += "<br>" + name;
 
             console.log(taskspantag);
@@ -161,37 +172,40 @@ function addtasks() {
 
 }
 
+
+
 function deleteTasks() {
     var checkboxes = document.getElementsByName("task");
     for (var checkbox of checkboxes) {
         if (checkbox.checked) {
-            var test = "label-"+checkbox.id;
+            var test = "label-" + checkbox.id;
             console.log(test);
             document.getElementById(test).remove();
             checkboxtospan = checkbox.id.replace("label", "");
-            checkbox.remove();
-       
-            checkboxtospan = "span-"+ checkboxtospan;
+
+
+
+            checkboxtospan = "span-" + checkboxtospan;
             console.log(checkboxtospan);
 
             checkmonthspan = checkboxtospan.split("-")[3];
             console.log(checkmonthspan);
-            checkmonth= curmonth + 1;
+            checkmonth = curmonth + 1;
 
-            if(checkmonth < 10){
+            if (checkmonth < 10) {
                 checkmonth = "0" + checkmonth;
             }
 
-            if(checkmonth == checkboxtospan){
+            if (checkmonth == checkmonthspan) {
                 document.getElementById(checkboxtospan).remove();
             }
 
-        
+
         }
     }
 
 
-   
+
 }
 
 
@@ -215,29 +229,29 @@ function nextMonth() {
         loadCells(curmonth, curYear);
     }
 
-    
-    var labelinformation = document.getElementById("list").getElementsByTagName("label");
-    
+
+    var labelinformation = document.getElementById("list").getElementsByTagName("div");
+
     console.log(labelinformation);
 
-    for (var i = 0; i < labelinformation.length; i++){
+    for (var i = 0; i < labelinformation.length; i++) {
         var tasklabel = labelinformation[i].attributes[0].nodeValue;
 
         taskname = (tasklabel.split("-")[1]);
-        taskyear= (tasklabel.split("-")[2])
+        taskyear = (tasklabel.split("-")[2])
         taskmonth = (tasklabel.split("-")[3])
         taskday = (tasklabel.split("-")[4])
         console.log(taskyear);
         console.log(taskmonth);
 
-        if(taskday < 10){
+        if (taskday < 10) {
             console.log(taskday);
             taskday = taskday.replace("0", "");
         }
-        
 
-        
-       
+
+
+
 
         if (curmonth < 10) {
             var newmonth = "0" + (curmonth + 1);
@@ -245,22 +259,22 @@ function nextMonth() {
 
         console.log(newmonth);
 
-        if(curYear == taskyear & newmonth == taskmonth){
+        if (curYear == taskyear & newmonth == taskmonth) {
             console.log(taskname);
             var taskdate = taskyear + "-" + taskmonth + "-" + taskday;
             console.log(taskdate);
             var taskspantag = document.createElement("span");
-            taskspantagname = "span-"+ taskname + "-" + taskdate;
+            taskspantagname = "span-" + taskname + "-" + taskdate;
             taskspantag.id = taskspantagname;
 
-            
+
             taskspantag.innerHTML += "<br>" + taskname;
 
             console.log(taskspantag);
             document.getElementById(taskdate).appendChild(taskspantag);
         }
     }
-    
+
 }
 
 function prevMonth() {
@@ -281,23 +295,23 @@ function prevMonth() {
         loadCells(curmonth, curYear);
     }
 
-    var labelinformation = document.getElementById("list").getElementsByTagName("label");
-    for (var i = 0; i < labelinformation.length; i++){
+    var labelinformation = document.getElementById("list").getElementsByTagName("div");
+    for (var i = 0; i < labelinformation.length; i++) {
         var tasklabel = labelinformation[i].attributes[0].nodeValue;
 
         taskname = (tasklabel.split("-")[1]);
-        taskyear= (tasklabel.split("-")[2])
+        taskyear = (tasklabel.split("-")[2])
         taskmonth = (tasklabel.split("-")[3])
         taskday = (tasklabel.split("-")[4])
         console.log(taskyear);
         console.log(taskmonth);
-        
-        if(taskday < 10){
+
+        if (taskday < 10) {
             console.log(taskday);
             taskday = taskday.replace("0", "");
         }
-        
-       
+
+
 
         if (curmonth < 10) {
             var newmonth = "0" + (curmonth + 1);
@@ -305,15 +319,15 @@ function prevMonth() {
 
         console.log(newmonth);
 
-        if(curYear == taskyear & newmonth == taskmonth){
+        if (curYear == taskyear & newmonth == taskmonth) {
             console.log(taskname);
             var taskdate = taskyear + "-" + taskmonth + "-" + taskday;
             console.log(taskdate);
             var taskspantag = document.createElement("span");
-            taskspantagname = "span-"+ taskname + "-" + taskdate;
+            taskspantagname = "span-" + taskname + "-" + taskdate;
             taskspantag.id = taskspantagname;
 
-            
+
             taskspantag.innerHTML += "<br>" + taskname;
 
             console.log(taskspantag);
