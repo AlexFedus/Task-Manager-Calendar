@@ -2,6 +2,7 @@ current = new Date();
 var curmonth = current.getMonth();
 var curYear = current.getFullYear();
 var curday = current.getDay();
+var holidayarr = [];
 const months = ["Janauary", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 window.onload = pageLoad;
@@ -9,9 +10,11 @@ window.onload = pageLoad;
 
 
 
-
+// Function called when page is loaded. Calls load date function to load the date when the page is loaded.
 function pageLoad() {
+
     loadDate();
+
     var taskbutton = document.getElementById("taskbutton");
     var nextbutton = document.getElementById("next");
     var prevbutton = document.getElementById("previous");
@@ -21,6 +24,7 @@ function pageLoad() {
     prevbutton.onclick = prevMonth;
 }
 
+// Displays the current date and year and calls function to create calendar cells.
 function loadDate() {
     monthandyear = months[curmonth] + ", " + curYear;
 
@@ -29,12 +33,11 @@ function loadDate() {
 
 }
 
+// Loads cells of the calendar based on the current month and year
 function loadCells(currmonth, curYear) {
     today = new Date();
     daysinmonth = new Date(curYear, currmonth + 1, 0).getDate();
-    console.log(daysinmonth);
     firstDay = (new Date(curYear, currmonth)).getDay();
-    console.log(firstDay);
 
 
     caltable = document.getElementById("calbody");
@@ -43,10 +46,14 @@ function loadCells(currmonth, curYear) {
 
     date = 1;
 
+    //Creates a row of cells for each week of the month
     for (i = 0; i < 6; i++) {
         row = document.createElement("tr");
 
+        // Creates a cell for each day in the week
         for (let j = 0; j < 7; j++) {
+
+            //Creates a blank cell with no date if cell is before first day in a month
             if (i === 0 & j < firstDay) {
                 cell = document.createElement("td");
 
@@ -60,7 +67,8 @@ function loadCells(currmonth, curYear) {
 
             else {
 
-                if (currmonth < 10) {
+                // Adds a preceding 0, used to make id's uniform
+                if (currmonth < 9) {
                     var updatemonth = "0" + (currmonth + 1);
                 }
                 else {
@@ -70,6 +78,9 @@ function loadCells(currmonth, curYear) {
                 idname = curYear + "-" + updatemonth + "-" + date;
                 cell = document.createElement("td");
                 cell.setAttribute("id", idname);
+
+                holidayarr.push(idname);
+                
 
 
                 cellText = document.createTextNode(date);
@@ -83,19 +94,78 @@ function loadCells(currmonth, curYear) {
         }
 
         caltable.appendChild(row);
-        //holidays();
+
     }
+    //Called to load holidays in
+    holidays();
+
+}
+
+
+function holidays() {
+    new Ajax.Request("holidays.json",
+        {
+            method: "get",
+            onSuccess: listHolidays,
+            onFailure: ajaxFailure,
+        }
+    );
 
 }
 
 
 
-  
 
+function listHolidays(ajax) {
+
+
+    var data = JSON.parse(ajax.responseText);
+    for (var i = 0; i < data.holidays.length; i++) {
+        if (holidayarr.includes(data.holidays[i].date)) {
+
+          
+            holidayid = data.holidays[i].date;
+
+            var taskspantag = document.createElement("span");
+            taskspantagname = "span-" + data.holidays[i].date;
+            taskspantag.id = taskspantagname;
+
+
+            taskspantag.innerHTML += "<br>" + data.holidays[i].name;
+
+            
+            document.getElementById(data.holidays[i].date).appendChild(taskspantag);
+
+
+
+
+
+
+        }
+
+    }
+
+
+}
+
+
+function ajaxFailure(ajax, exception) {
+    alert("Error making Ajax request:" + "\n\nServer status:\n"
+        + ajax.status + " " + ajax.statusText
+        + "\n\nServer response text:\n" + ajax.responseText);
+    if (exception) {
+        console.log(exception);
+        throw exception;
+    }
+}
+
+
+
+// Adds tasks to tasklist and to calendar
 function addtasks() {
     if (document.getElementById("taskname").value != "") {
         var name = document.getElementById("taskname").value;
-        console.log(name);
+        
 
         date = document.getElementById("date").value;
         var newdate = date.split("-");
@@ -103,18 +173,13 @@ function addtasks() {
 
         if (newdateday < 10) {
             newdateday = newdateday.replace("0", "");
-            console.log(newdateday);
             date = newdate[0] + "-" + newdate[1] + "-" + newdateday;
-            console.log(date);
         }
 
 
-        console.log(date);
 
         time = document.getElementById("time").value;
-        console.log(time);
 
-        //taskinfo = document.createTextNode(name + " - "+ date + " - " + time);
         var taskinfo = name + "-" + date;
         var labelinfo = "label" + "-" + name + "-" + date;
 
@@ -125,25 +190,16 @@ function addtasks() {
         task.type = "checkbox";
         task.name = "task"
         var label = document.createElement("label");
-        //label.setAttribute("id", labelinfo);
         label.htmlFor = taskinfo;
         label.appendChild(document.createTextNode(taskinfo));
 
-        //var br = document.createElement("br");
 
-
-        //task.appendChild(taskinfo);
-
-
-        //list.appendChild(br);
 
         taskdiv.appendChild(label);
         taskdiv.appendChild(task);
         list.appendChild(taskdiv);
 
-        //list.appendChild(label);
-        //list.appendChild(task);
-        //document.getElementById("list").appendChild(task);
+      
 
 
 
@@ -157,7 +213,7 @@ function addtasks() {
 
             taskspantag.innerHTML += "<br>" + name;
 
-            console.log(taskspantag);
+            
             document.getElementById(date).appendChild(taskspantag);
         }
 
@@ -173,23 +229,20 @@ function addtasks() {
 }
 
 
-
+// Deletes tasks from task list and calendar
 function deleteTasks() {
     var checkboxes = document.getElementsByName("task");
     for (var checkbox of checkboxes) {
         if (checkbox.checked) {
             var test = "label-" + checkbox.id;
-            console.log(test);
             document.getElementById(test).remove();
             checkboxtospan = checkbox.id.replace("label", "");
 
 
 
             checkboxtospan = "span-" + checkboxtospan;
-            console.log(checkboxtospan);
 
             checkmonthspan = checkboxtospan.split("-")[3];
-            console.log(checkmonthspan);
             checkmonth = curmonth + 1;
 
             if (checkmonth < 10) {
@@ -209,8 +262,10 @@ function deleteTasks() {
 }
 
 
-
+// Displays the next month when the next arrow is clicked.
 function nextMonth() {
+
+    holidayarr = [];
 
     if (curmonth < 11) {
         curmonth += 1;
@@ -232,7 +287,6 @@ function nextMonth() {
 
     var labelinformation = document.getElementById("list").getElementsByTagName("div");
 
-    console.log(labelinformation);
 
     for (var i = 0; i < labelinformation.length; i++) {
         var tasklabel = labelinformation[i].attributes[0].nodeValue;
@@ -241,11 +295,9 @@ function nextMonth() {
         taskyear = (tasklabel.split("-")[2])
         taskmonth = (tasklabel.split("-")[3])
         taskday = (tasklabel.split("-")[4])
-        console.log(taskyear);
-        console.log(taskmonth);
+
 
         if (taskday < 10) {
-            console.log(taskday);
             taskday = taskday.replace("0", "");
         }
 
@@ -257,12 +309,9 @@ function nextMonth() {
             var newmonth = "0" + (curmonth + 1);
         }
 
-        console.log(newmonth);
 
         if (curYear == taskyear & newmonth == taskmonth) {
-            console.log(taskname);
             var taskdate = taskyear + "-" + taskmonth + "-" + taskday;
-            console.log(taskdate);
             var taskspantag = document.createElement("span");
             taskspantagname = "span-" + taskname + "-" + taskdate;
             taskspantag.id = taskspantagname;
@@ -270,14 +319,16 @@ function nextMonth() {
 
             taskspantag.innerHTML += "<br>" + taskname;
 
-            console.log(taskspantag);
             document.getElementById(taskdate).appendChild(taskspantag);
         }
     }
 
 }
 
+
+// Displays the previous month when the previous arrow is clicked.
 function prevMonth() {
+    holidayarr = [];
     if (curmonth > 0) {
         curmonth -= 1;
         monthandyear = months[curmonth] + ", " + curYear;
@@ -303,11 +354,9 @@ function prevMonth() {
         taskyear = (tasklabel.split("-")[2])
         taskmonth = (tasklabel.split("-")[3])
         taskday = (tasklabel.split("-")[4])
-        console.log(taskyear);
-        console.log(taskmonth);
+
 
         if (taskday < 10) {
-            console.log(taskday);
             taskday = taskday.replace("0", "");
         }
 
@@ -317,12 +366,10 @@ function prevMonth() {
             var newmonth = "0" + (curmonth + 1);
         }
 
-        console.log(newmonth);
+
 
         if (curYear == taskyear & newmonth == taskmonth) {
-            console.log(taskname);
             var taskdate = taskyear + "-" + taskmonth + "-" + taskday;
-            console.log(taskdate);
             var taskspantag = document.createElement("span");
             taskspantagname = "span-" + taskname + "-" + taskdate;
             taskspantag.id = taskspantagname;
@@ -330,7 +377,6 @@ function prevMonth() {
 
             taskspantag.innerHTML += "<br>" + taskname;
 
-            console.log(taskspantag);
             document.getElementById(taskdate).appendChild(taskspantag);
         }
     }
