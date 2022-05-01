@@ -3,9 +3,11 @@ var curmonth = current.getMonth();
 var curYear = current.getFullYear();
 var curday = current.getDay();
 var holidayarr = [];
+var allevents = [];
 const months = ["Janauary", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 window.onload = pageLoad;
+
 
 
 
@@ -18,10 +20,13 @@ function pageLoad() {
     var taskbutton = document.getElementById("taskbutton");
     var nextbutton = document.getElementById("next");
     var prevbutton = document.getElementById("previous");
+    var savetasks = document.getElementById("savetofile");
 
     taskbutton.onclick = addtasks;
     nextbutton.onclick = nextMonth;
     prevbutton.onclick = prevMonth;
+    savetasks.onclick = savetaskfile;
+
 }
 
 // Displays the current date and year and calls function to create calendar cells.
@@ -79,10 +84,12 @@ function loadCells(currmonth, curYear) {
                 cell = document.createElement("td");
                 cell.setAttribute("id", idname);
 
+                //pushes id to array used to match holidays within current month
                 holidayarr.push(idname);
-                
 
 
+
+                //Adds elements to page
                 cellText = document.createTextNode(date);
                 cell.appendChild(cellText);
                 row.appendChild(cell);
@@ -102,6 +109,7 @@ function loadCells(currmonth, curYear) {
 }
 
 
+//Reads JSON file
 function holidays() {
     new Ajax.Request("holidays.json",
         {
@@ -115,7 +123,7 @@ function holidays() {
 
 
 
-
+// Lists holidays from Json file depending on the current month being viewed
 function listHolidays(ajax) {
 
 
@@ -123,9 +131,10 @@ function listHolidays(ajax) {
     for (var i = 0; i < data.holidays.length; i++) {
         if (holidayarr.includes(data.holidays[i].date)) {
 
-          
+
             holidayid = data.holidays[i].date;
 
+            //Creates id and adds holidays to correct date on calendar
             var taskspantag = document.createElement("span");
             taskspantagname = "span-" + data.holidays[i].date;
             taskspantag.id = taskspantagname;
@@ -133,7 +142,7 @@ function listHolidays(ajax) {
 
             taskspantag.innerHTML += "<br>" + data.holidays[i].name;
 
-            
+
             document.getElementById(data.holidays[i].date).appendChild(taskspantag);
 
 
@@ -148,7 +157,7 @@ function listHolidays(ajax) {
 
 }
 
-
+// Throws error when ajax fails
 function ajaxFailure(ajax, exception) {
     alert("Error making Ajax request:" + "\n\nServer status:\n"
         + ajax.status + " " + ajax.statusText
@@ -165,12 +174,13 @@ function ajaxFailure(ajax, exception) {
 function addtasks() {
     if (document.getElementById("taskname").value != "") {
         var name = document.getElementById("taskname").value;
-        
+
 
         date = document.getElementById("date").value;
         var newdate = date.split("-");
         var newdateday = newdate[2];
 
+        //Gets rid of preceding 0; used to match id names
         if (newdateday < 10) {
             newdateday = newdateday.replace("0", "");
             date = newdate[0] + "-" + newdate[1] + "-" + newdateday;
@@ -178,14 +188,17 @@ function addtasks() {
 
 
 
-        time = document.getElementById("time").value;
-
+       
+        //Sets up info to be pushed to array; array is used when saving txt file
         var taskinfo = name + "-" + date;
-        var labelinfo = "label" + "-" + name + "-" + date;
+        allevents.push(taskinfo);
 
+        //id name for label
+        var labelinfo = "label" + "-" + name + "-" + date;
         taskdiv = document.createElement("div");
         taskdiv.setAttribute("id", labelinfo);
 
+        //creates check box along with the label
         task = document.createElement("input");
         task.type = "checkbox";
         task.name = "task"
@@ -199,12 +212,12 @@ function addtasks() {
         taskdiv.appendChild(task);
         list.appendChild(taskdiv);
 
-      
 
 
 
 
-
+        //checks if task created is located in current month being viewed
+        //if so, adds task to the calendar
         if (document.getElementById(date)) {
             var taskspantag = document.createElement("span");
             taskspantagname = "span-" + name + "-" + date;
@@ -213,7 +226,7 @@ function addtasks() {
 
             taskspantag.innerHTML += "<br>" + name;
 
-            
+
             document.getElementById(date).appendChild(taskspantag);
         }
 
@@ -232,15 +245,20 @@ function addtasks() {
 // Deletes tasks from task list and calendar
 function deleteTasks() {
     var checkboxes = document.getElementsByName("task");
+
+    //Checks which checkboxes are checked to see what to delete
+    //Removes checkboxes that are checked
+    //Removes labels for checkboxes
     for (var checkbox of checkboxes) {
         if (checkbox.checked) {
             var test = "label-" + checkbox.id;
+
             document.getElementById(test).remove();
-            checkboxtospan = checkbox.id.replace("label", "");
+            checkboxtospantemp = checkbox.id.replace("label", "");
 
+            allevents = allevents.filter(e => e !== checkboxtospantemp);
 
-
-            checkboxtospan = "span-" + checkboxtospan;
+            checkboxtospan = "span-" + checkboxtospantemp;
 
             checkmonthspan = checkboxtospan.split("-")[3];
             checkmonth = curmonth + 1;
@@ -265,8 +283,10 @@ function deleteTasks() {
 // Displays the next month when the next arrow is clicked.
 function nextMonth() {
 
+    //Clears array of holidays in current month
     holidayarr = [];
 
+    //Displays current month and year for the next month
     if (curmonth < 11) {
         curmonth += 1;
         monthandyear = months[curmonth] + ", " + curYear;
@@ -297,19 +317,17 @@ function nextMonth() {
         taskday = (tasklabel.split("-")[4])
 
 
+        //Removes and adds 0's for id matching
         if (taskday < 10) {
             taskday = taskday.replace("0", "");
         }
-
-
-
-
 
         if (curmonth < 10) {
             var newmonth = "0" + (curmonth + 1);
         }
 
 
+        // Adds tasks from tasklist that are in the next month to the calendar
         if (curYear == taskyear & newmonth == taskmonth) {
             var taskdate = taskyear + "-" + taskmonth + "-" + taskday;
             var taskspantag = document.createElement("span");
@@ -328,7 +346,11 @@ function nextMonth() {
 
 // Displays the previous month when the previous arrow is clicked.
 function prevMonth() {
+
+    //clears array of holidays in current month
     holidayarr = [];
+
+    //Displays the previous month and year
     if (curmonth > 0) {
         curmonth -= 1;
         monthandyear = months[curmonth] + ", " + curYear;
@@ -346,6 +368,7 @@ function prevMonth() {
         loadCells(curmonth, curYear);
     }
 
+
     var labelinformation = document.getElementById("list").getElementsByTagName("div");
     for (var i = 0; i < labelinformation.length; i++) {
         var tasklabel = labelinformation[i].attributes[0].nodeValue;
@@ -361,13 +384,12 @@ function prevMonth() {
         }
 
 
-
         if (curmonth < 10) {
             var newmonth = "0" + (curmonth + 1);
         }
 
 
-
+        // Adds tasks from tasklist that are in the previous month to the calendar
         if (curYear == taskyear & newmonth == taskmonth) {
             var taskdate = taskyear + "-" + taskmonth + "-" + taskday;
             var taskspantag = document.createElement("span");
@@ -383,3 +405,26 @@ function prevMonth() {
 }
 
 
+//Saves current tasks in list to a txt file when save tasks button is clicked.
+//Utilizes an async function to write and save the file
+
+async function savetaskfile() {
+
+    var myBlob = new Blob([allevents], { type: "text/plain" });
+
+
+
+    // Await used to write contents to the file before being able to save it.
+    var savebox = await window.showSaveFilePicker({
+        types: [{ accept: { "text/plain": [".txt"] } }]
+    });
+
+    var filecontents = await savebox.createWritable();
+
+
+
+    // writes contents to files
+    filecontents.write(myBlob);
+    filecontents.close();
+
+}
