@@ -60,11 +60,11 @@ function loadCells(currmonth, curYear) {
 
             //Creates a blank cell with no date if cell is before first day in a month
             if (i === 0 & j < firstDay) {
-                cell = document.createElement("td");
+                datebox = document.createElement("td");
 
-                cellText = document.createTextNode("");
-                cell.appendChild(cellText);
-                row.appendChild(cell);
+                dateText = document.createTextNode("");
+                datebox.appendChild(dateText);
+                row.appendChild(datehbox);
             }
             else if (date > daysinmonth) {
                 break;
@@ -81,8 +81,8 @@ function loadCells(currmonth, curYear) {
                 }
 
                 idname = curYear + "-" + updatemonth + "-" + date;
-                cell = document.createElement("td");
-                cell.setAttribute("id", idname);
+                datebox = document.createElement("td");
+                datebox.setAttribute("id", idname);
 
                 //pushes id to array used to match holidays within current month
                 holidayarr.push(idname);
@@ -90,9 +90,9 @@ function loadCells(currmonth, curYear) {
 
 
                 //Adds elements to page
-                cellText = document.createTextNode(date);
-                cell.appendChild(cellText);
-                row.appendChild(cell);
+                dateText = document.createTextNode(date);
+                datebox.appendChild(dateText);
+                row.appendChild(datebox);
                 date++;
             }
 
@@ -410,7 +410,7 @@ function prevMonth() {
 
 async function savetaskfile() {
 
-    var myBlob = new Blob([allevents], { type: "text/plain" });
+    var blob = new Blob([allevents], { type: "text/plain" });
 
 
 
@@ -424,7 +424,7 @@ async function savetaskfile() {
 
 
     // writes contents to files
-    filecontents.write(myBlob);
+    filecontents.write(blob);
     filecontents.close();
 
 }
