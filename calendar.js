@@ -64,7 +64,7 @@ function loadCells(currmonth, curYear) {
 
                 dateText = document.createTextNode("");
                 datebox.appendChild(dateText);
-                row.appendChild(datehbox);
+                row.appendChild(datebox);
             }
             else if (date > daysinmonth) {
                 break;
